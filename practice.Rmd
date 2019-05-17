@@ -1,0 +1,46 @@
+---
+title: "Practice"
+author: "Emily Cole"
+date: "May 14, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set
+load("C:\\Users\\Emily Cole\\OneDrive - umich.edu\\R\\project1\\36368-0001-Data.rda")
+
+library(ggplot2)
+
+library(dplyr)
+
+library(ggthemes)
+
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r echo=FALSE}
+da36368.0001 %>% filter(!is.na(GOVT_NOSTATEACTION)) %>% 
+  ggplot(aes(x = GOVT_NOSTATEACTION, fill = GOVT_NOSTATEACTION)) + geom_bar() + 
+  scale_fill_wsj(palette = "rgby", 
+  name = "If the federal government fails \nto address global warming, \nit's my state's responsibilty to act") + 
+  theme_wsj(base_size = 8, color = 'gray', base_family = "sans", title_family = "mono") + 
+  theme(axis.text.x=element_blank(), axis.ticks.x=element_blank(), 
+        legend.text = element_text(size = 7), legend.title = element_text(size = 7), legend.position = "bottom") + 
+  labs(title="Should States Pick Up the \nSlack on Climate Action?")
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
