@@ -1,0 +1,46 @@
+---
+title: "Mapping in R"
+author: "Emily Cole"
+date: "June 7, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r echo=TRUE}
+library(dplyr)
+library(tidyr)
+library(plotly)
+library(tidyverse)
+library(tidycensus)
+library(tidyverse)
+library(mapview)
+
+options(tigris_use_cache = TRUE)
+
+census_api_key("38ffee25dd1013e6d30e573533680181796e5a3d")
+m90 <- get_decennial(geography = "state", variables = "H043A001", year = 1990)
+
+head(m90)
+
+GrandRapids <- get_acs(state = "MI", county = "Kent", geography = "tract", variables = "B19013_001", geometry = TRUE)
+
+GrandRapids %>% ggplot(aes(fill=estimate)) + geom_sf() + labs(title = "Quick Map: Grand Rapids", subtitle = "Median Family Income") + scale_fill_viridis_c()
+```
+
+```{r echo=TRUE}
+mapview(GrandRapids, zcol = "estimate", legend = TRUE, 
+        layer.name = "Grand Rapids: Median Family Income")
+```
+
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
